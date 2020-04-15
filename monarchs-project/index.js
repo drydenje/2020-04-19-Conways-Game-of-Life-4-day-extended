@@ -19,7 +19,6 @@ const tick = () => {
   renderer(world);
 }
 
-
-for (var i = 0; i < 50; i++) {
+for (var i = 0; i < 10; i++) {
   tick();
 }

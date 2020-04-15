@@ -6,36 +6,36 @@ function times(iterations = 1, callback) {
   }
 }
 
-function getNumberOfNeighbours(world, cellRow, cellCol) {
+function getNumberOfNeighbours(world, homeRow, homeCol) {
 
   // scan the neighbourhood
-  const startingRow = cellRow - 1;
-  const endingRow = cellRow + 1;
+  const startingRow = homeRow - 1;
+  const endingRow = homeRow + 1;
 
-  const startingCol = cellCol - 1;
-  const endingCol = cellCol + 1; // R.I.P. Bug, you were called cellRow once. goddammit.
+  const startingCol = homeCol - 1;
+  const endingCol = homeCol + 1; // R.I.P. Bug, you were called cellRow once. goddammit.
 
   let numberOfNeighbours = 0;
 
-  for (var row = startingRow; row < endingRow; row++) {
+  for (var currentRow = startingRow; currentRow <= endingRow; currentRow++) {
     // EDGE CASE 1: don't work with out-of-bound rows
-    if (row < 0 || row > (ROW_SIZE - 1)) {
+    if (currentRow < 0 || currentRow > (ROW_SIZE - 1)) {
       continue;
     }
 
-    for (var col = startingCol; col < endingCol; col++) {
+    for (var currentCol = startingCol; currentCol <= endingCol; currentCol++) {
       // EDGE CASE 2: don't work with out-of-bound cols
-      if (col < 0 || col > (ROW_SIZE - 1)) {
+      if (currentCol < 0 || currentCol > (ROW_SIZE - 1)) {
         continue;
       }
 
       // EDGE CASE 3: don't scan yourself!
-      if (row === cellRow && col === cellCol) {
+      if (currentRow === homeRow && currentCol === homeCol) {
         continue;
       }
 
       // scanning the neighbour now
-      if (world[row][col] === ON) {
+      if (world[currentRow][currentCol] === ON) {
         numberOfNeighbours++;
       }
     }
@@ -44,7 +44,7 @@ function getNumberOfNeighbours(world, cellRow, cellCol) {
   return numberOfNeighbours;
 }
 
-function initWorld(valueToSet = OFF) {
+function initWorld(valueToSet) {
   const world = [];
 
   times(ROW_SIZE, row => {
