@@ -1,20 +1,25 @@
-const { ROW_SIZE, COL_SIZE, OFF, } = require("./ROW_SIZE");
-const { tick } = require('./tick');
-const { times } = require('./utils');
+const { ROW_SIZE, COL_SIZE, OFF, } = require("./constants");
+const { calculateNewWorldState } = require('./calculateNewWorldState');
+const { times, initWorld, draw } = require('./utils');
+const { renderer } = require('./renderer');
 
 // The world
-const world = [];
+let world = initWorld(OFF);
 
-// Initialize the world
-times(ROW_SIZE, row => {
-  world[row] = [];
+// draw a glider
+draw(world, 3, 4);
+draw(world, 4, 5);
+draw(world, 5, 5);
+draw(world, 5, 4);
+draw(world, 5, 3);
 
-  times(COL_SIZE, col => {
-    world[row][col] = OFF;
-  })
-});
+// CALCULATE
+const tick = () => {
+  world = calculateNewWorldState(world);
+  renderer(world);
+}
 
-// Start
-console.log(world);
-tick(world);
-console.log(world);
+
+for (var i = 0; i < 50; i++) {
+  tick();
+}
